@@ -2,14 +2,19 @@
 bop
 ===
 
-
-Add a short description here!
-
+Binary options predictor
+------------------------
 
 Description
 ===========
 
-A longer description of your project goes here...
+BOP is a tool which help with playing on a stock market, especially on Binary options.
+The main task of this tool is to predict with a percentage if next value of exchange rate
+will be lower or higher (or equal).
+
+BOP to predict next value use n previous values of exchange rate by using recursive neural networks.
+
+API to get exchange rate values : https://exchangeratesapi.io/
 
 
 Note
