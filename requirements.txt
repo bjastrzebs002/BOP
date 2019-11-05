@@ -48,7 +48,7 @@ dask==0.17.5
 datashape==0.5.4
 decorator==4.3.0
 distributed==1.21.8
-Django==2.0.5
+Django==2.0.12
 djitellopy==1.5
 dlib==19.16.0
 docutils==0.14
