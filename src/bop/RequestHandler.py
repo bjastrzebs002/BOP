@@ -1,7 +1,5 @@
 import json
 import requests
-import matplotlib.pyplot as plt
-import numpy as np
 import datetime
 import random
 
@@ -25,3 +23,4 @@ class RequestHandler:
 
             dates = self.get_response(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))
             self.dates_list.append(dates)
+        return self.dates_list
