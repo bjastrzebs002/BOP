@@ -1,9 +1,4 @@
-from datetime import datetime
-from datetime import timedelta
-from RequestHandler import RequestHandler
-
-
-lista = RequestHandler().get_data()
+from datetime import datetime, timedelta
 
 
 class PrepareData:
@@ -15,14 +10,15 @@ class PrepareData:
     def prepare(self):
         for x in self.unsorted_list:
             r = x['rates']
+            start_date, end_date = x["start_at"], x["end_at"]
             dates_n_rates = []
             for key, val in r.items():
                 temp_tuple = tuple((datetime.strptime(key, '%Y-%m-%d').date(), val['EUR']))
                 dates_n_rates.append(temp_tuple)
             self.sort_d(dates_n_rates)
             self.add_missing_d(dates_n_rates)
-            dates_n_rates.pop(-1)
-            self.all_dates.append(dates_n_rates)
+            self.check_boundary(start_date, end_date, dates_n_rates)
+            self.all_dates.append(dates_n_rates[:-1])
             self.results.append(self.compare(dates_n_rates))
         return self.all_dates, self.results
 
@@ -41,28 +37,27 @@ class PrepareData:
                     self.add_missing_d(dates_n_rates)
         except IndexError:
             pass
-        if len(dates_n_rates) > 101:
-            for y in range(len(dates_n_rates) - 101):
-                dates_n_rates.pop(0)
-        elif len(dates_n_rates) < 101:
-            for z in range(101 - len(dates_n_rates)):
-                t_date = dates_n_rates[0][0] - timedelta(days=(z+1))
-                temp_data = (t_date, dates_n_rates[0][1])
-                # print(temp_data)
-                dates_n_rates.insert(0, temp_data)
 
-    def compare(self, dates_n_rates):
-        if dates_n_rates[-1][1] > dates_n_rates[-2][1]:
+    @staticmethod
+    def check_boundary(start, end, dates_n_rates):
+        start_date = datetime.strptime(start, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end, '%Y-%m-%d').date()
+        if dates_n_rates[0][0] != start_date:
+            value = dates_n_rates[0][1]
+            actual_date = dates_n_rates[0][0]
+            while actual_date != start_date:
+                dates_n_rates.insert(0, (actual_date, value))
+                actual_date -= timedelta(days=1)
+        elif dates_n_rates[-1][0] != end_date:
+            value = dates_n_rates[-1][1]
+            actual_date = dates_n_rates[-1][0]
+            while actual_date != end_date:
+                dates_n_rates.append((actual_date, value))
+                actual_date += timedelta(days=1)
+
+    @staticmethod
+    def compare(dates_n_rates):
+        if dates_n_rates[-1][1] >= dates_n_rates[-2][1]:
             return 1
         else:
             return 0
-
-
-#print(lista)
-A = PrepareData(lista)
-A.prepare()
-#print(A.all_dates[0][0][1])
-print(A.all_dates[3])
-for x in range(len(A.all_dates)):
-    print(len(A.all_dates[x]))
-print(A.results)
