@@ -33,6 +33,7 @@ class PrepareData:
         return self.all_dates, np.array(self.results)
 
     def single_dict_prepare(self, one_dict):
+        # single dictionary preparing method
         t = one_dict['rates']
         start_date, end_date = one_dict['start_at'], one_dict['end_at']
         one_dict_dates_n_rates = []
