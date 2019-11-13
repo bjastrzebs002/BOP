@@ -43,7 +43,7 @@ class PrepareData:
         self.sort_d(one_dict_dates_n_rates)
         self.add_missing_d(one_dict_dates_n_rates)
         self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
-        return self.one_dict_dates
+        return one_dict_dates_n_rates
 
     @staticmethod
     def sort_d(dates_n_rates):
