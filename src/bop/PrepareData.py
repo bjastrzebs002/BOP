@@ -1,11 +1,13 @@
 from datetime import datetime, timedelta
 
-
 class PrepareData:
     def __init__(self, unsorted_list):
         self.unsorted_list = unsorted_list
         self.all_dates = []
         self.results = []
+        self.one_dict_values = []
+        self.one_dict_dates = []
+        self.one_dict_results = []
 
     def prepare(self):
         for x in self.unsorted_list:
@@ -21,6 +23,20 @@ class PrepareData:
             self.all_dates.append(dates_n_rates[:-1])
             self.results.append(self.compare(dates_n_rates))
         return self.all_dates, self.results
+
+    def single_dict_prepare(self, one_dict):
+        t = one_dict['rates']
+        start_date, end_date = one_dict['start_at'], one_dict['end_at']
+        one_dict_dates_n_rates = []
+        for key, val in t.items():
+            temp_tuple = tuple((datetime.strptime(key, '%Y-%m-%d').date(), val['EUR']))
+            one_dict_dates_n_rates.append(temp_tuple)
+        self.sort_d(one_dict_dates_n_rates)
+        self.add_missing_d(one_dict_dates_n_rates)
+        self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
+        self.one_dict_dates.append(one_dict_dates_n_rates[:-1])
+        self.one_dict_results.append(self.compare(one_dict_dates_n_rates))
+        return self.one_dict_dates, self.one_dict_results
 
     @staticmethod
     def sort_d(dates_n_rates):

@@ -16,7 +16,7 @@ class RequestHandler:
         return json.loads(r.text)
 
     def get_data(self):
-        for i in range(2):
+        for i in range(1):
             random_date = (random.randint(-1000, 1000))
             start_date = (self.DATETIME + datetime.timedelta(days=random_date))
             end_date = (start_date + datetime.timedelta(days=100))
