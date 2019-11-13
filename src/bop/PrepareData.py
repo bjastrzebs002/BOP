@@ -10,8 +10,6 @@ class PrepareData:
         self.unsorted_list = unsorted_list
         self.all_dates = []
         self.results = []
-        self.one_dict_values = []
-        self.one_dict_dates = []
 
     def prepare(self):
         logging.info("Preprocessing downloaded data..")
