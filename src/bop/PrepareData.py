@@ -12,7 +12,6 @@ class PrepareData:
         self.results = []
         self.one_dict_values = []
         self.one_dict_dates = []
-        self.one_dict_results = []
 
     def prepare(self):
         logging.info("Preprocessing downloaded data..")
@@ -43,9 +42,7 @@ class PrepareData:
         self.sort_d(one_dict_dates_n_rates)
         self.add_missing_d(one_dict_dates_n_rates)
         self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
-        self.one_dict_dates.append(one_dict_dates_n_rates[:-1])
-        self.one_dict_results.append(self.compare(one_dict_dates_n_rates))
-        return self.one_dict_dates, self.one_dict_results
+        return self.one_dict_dates
 
     @staticmethod
     def sort_d(dates_n_rates):
