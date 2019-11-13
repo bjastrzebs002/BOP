@@ -1,4 +1,9 @@
 from datetime import datetime, timedelta
+import numpy as np
+import logging
+
+
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 class PrepareData:
     def __init__(self, unsorted_list):
@@ -10,6 +15,7 @@ class PrepareData:
         self.one_dict_results = []
 
     def prepare(self):
+        logging.info("Preprocessing downloaded data..")
         for x in self.unsorted_list:
             r = x['rates']
             start_date, end_date = x["start_at"], x["end_at"]
@@ -20,9 +26,12 @@ class PrepareData:
             self.sort_d(dates_n_rates)
             self.add_missing_d(dates_n_rates)
             self.check_boundary(start_date, end_date, dates_n_rates)
-            self.all_dates.append(dates_n_rates[:-1])
+            dates_save = np.array([i[1] for i in dates_n_rates])
+            if len(dates_save) != 101:
+                continue
+            self.all_dates.append(dates_save[:-1])
             self.results.append(self.compare(dates_n_rates))
-        return self.all_dates, self.results
+        return self.all_dates, np.array(self.results)
 
     def single_dict_prepare(self, one_dict):
         t = one_dict['rates']
