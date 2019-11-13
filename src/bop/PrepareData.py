@@ -10,9 +10,6 @@ class PrepareData:
         self.unsorted_list = unsorted_list
         self.all_dates = []
         self.results = []
-        self.one_dict_values = []
-        self.one_dict_dates = []
-        self.one_dict_results = []
 
     def prepare(self):
         logging.info("Preprocessing downloaded data..")
@@ -34,6 +31,7 @@ class PrepareData:
         return self.all_dates, np.array(self.results)
 
     def single_dict_prepare(self, one_dict):
+        # single dictionary preparing method
         t = one_dict['rates']
         start_date, end_date = one_dict['start_at'], one_dict['end_at']
         one_dict_dates_n_rates = []
@@ -43,9 +41,7 @@ class PrepareData:
         self.sort_d(one_dict_dates_n_rates)
         self.add_missing_d(one_dict_dates_n_rates)
         self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
-        self.one_dict_dates.append(one_dict_dates_n_rates[:-1])
-        self.one_dict_results.append(self.compare(one_dict_dates_n_rates))
-        return self.one_dict_dates, self.one_dict_results
+        return one_dict_dates_n_rates
 
     @staticmethod
     def sort_d(dates_n_rates):
