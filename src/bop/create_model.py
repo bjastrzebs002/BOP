@@ -14,7 +14,8 @@ def get_args():
 
 if __name__ == "__main__":
     args = get_args()
-    pd = PrepareData(RequestHandler().get_data())
+    pd = PrepareData(RequestHandler('USD', 'EUR').get_data())
     model_builder = ModelBuilder(pd.prepare())
     model_builder.train_model(args.batch_size, args.epochs)
     model_builder.save_model(args.filename)
+

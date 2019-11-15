@@ -7,22 +7,23 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 
-
 class RequestHandler:
-    def __init__(self,base,symbols):
+    def __init__(self, base, symbols):
         self.dates_list = []
-        self.currency_list = ["USD","EUR","CAD","CHF","GBP","SEK","EUR"]
+        self.currency_list = ["USD", "EUR", "CAD", "CHF", "GBP", "SEK", "EUR"]
         self.DATETIME = datetime.datetime.strptime("2015-01-01", '%Y-%m-%d')
         self.datetime_now = datetime.datetime.now()
         self.base = base
         self.symbols = symbols
 
-    def get_response(self,start_date, end_date):
+    def get_response(self, start_date, end_date):
         if self.base in self.currency_list:
             if self.symbols in self.currency_list:
-                request = "https://api.exchangeratesapi.io/history?start_at=" + start_date + "&end_at=" + end_date + "&symbols=" + self.symbols + "&base=" + self.base
+                request = "https://api.exchangeratesapi.io/history?start_at=" + start_date + "&end_at=" + end_date + \
+                          "&symbols=" + self.symbols + "&base=" + self.base
                 r = requests.get(request)
-        return json.loads(r.text)
+                return json.loads(r.text)
+        pass
 
     def get_data(self):
         logging.info("Downloading data from API..")
