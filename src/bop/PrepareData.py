@@ -5,7 +5,6 @@ import logging
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
-
 class PrepareData:
     def __init__(self, unsorted_list):
         self.unsorted_list = unsorted_list
@@ -30,6 +29,19 @@ class PrepareData:
             self.all_dates.append(dates_save[:-1])
             self.results.append(self.compare(dates_n_rates))
         return self.all_dates, np.array(self.results)
+
+    def single_dict_prepare(self, one_dict):
+        # single dictionary preparing method
+        t = one_dict['rates']
+        start_date, end_date = one_dict['start_at'], one_dict['end_at']
+        one_dict_dates_n_rates = []
+        for key, val in t.items():
+            temp_tuple = tuple((datetime.strptime(key, '%Y-%m-%d').date(), val['EUR']))
+            one_dict_dates_n_rates.append(temp_tuple)
+        self.sort_d(one_dict_dates_n_rates)
+        self.add_missing_d(one_dict_dates_n_rates)
+        self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
+        return one_dict_dates_n_rates
 
     @staticmethod
     def sort_d(dates_n_rates):
