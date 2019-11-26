@@ -10,7 +10,7 @@ logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 class RequestHandler:
     def __init__(self, base, symbols):
         self.dates_list = []
-        self.currency_list = ["USD", "EUR", "CAD", "CHF", "GBP", "SEK", "EUR"]
+        self.currency_list = ["USD", "EUR", "CAD", "CHF", "GBP", "SEK", "PLN"]
         self.DATETIME = datetime.datetime.strptime("2015-01-01", '%Y-%m-%d')
         self.datetime_now = datetime.datetime.now()
         self.base = base
@@ -38,6 +38,6 @@ class RequestHandler:
 
     def get_100daysback_data(self):
         end_date = self.datetime_now
-        start_date = (end_date - datetime.timedelta(days=100))
+        start_date = (end_date - datetime.timedelta(days=99))
         dates = self.get_response(start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"))
         return dates

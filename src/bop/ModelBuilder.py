@@ -1,6 +1,4 @@
 from ModelData import ModelData
-from RequestHandler import RequestHandler
-from PrepareData import PrepareData
 from keras.models import Sequential
 from keras.layers import LSTM, Dense, Dropout, TimeDistributed
 import logging
@@ -27,7 +25,7 @@ class ModelBuilder:
         model.compile(optimizer="adam", loss="mean_squared_error", metrics=['accuracy'])
         return model
 
-    def train_model(self, batch_size, epochs):
+    def train_model(self, batch_size=16, epochs=20):
         logging.info("Training model..")
         self.model.fit(self.model_data.get_train()[0], self.model_data.get_train()[1],
                        batch_size=batch_size, epochs=epochs,
@@ -36,3 +34,6 @@ class ModelBuilder:
     def save_model(self, filename):
         self.model.save("models/{}.h5".format(filename))
         logging.info("Model saved to models/{}.h5".format(filename))
+
+    def get_trained_model(self):
+        return self.model
