@@ -3,7 +3,8 @@ from src.bop import RequestHandler
 
 
 class TestRequestHandler(unittest.TestCase):
-    rh = RequestHandler.RequestHandler()
+    mock_base, mock_symbol = "USD", "EUR"
+    rh = RequestHandler.RequestHandler(mock_base, mock_symbol)
     rh_data = rh.get_data()
 
     def test_load(self):
