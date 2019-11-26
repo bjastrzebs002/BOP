@@ -26,3 +26,9 @@ class ModelData:
         x_test = np.asarray(x_test).reshape(-1, 1, 100)
         y_test = np.asarray(y_test).reshape(-1, 1, 1)
         return x_train, x_test, y_train, y_test
+
+    @staticmethod
+    def data_for_prediction(data):
+        return np.float32(data).reshape(-1, 1, 100)
+
+
