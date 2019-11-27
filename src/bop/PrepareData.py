@@ -23,7 +23,7 @@ class PrepareData:
             self.sort_d(dates_n_rates)
             self.add_missing_d(dates_n_rates)
             self.check_boundary(start_date, end_date, dates_n_rates)
-            dates_save = np.array([i[1] for i in dates_n_rates])
+            dates_save = self.norm_data(np.array([i[1] for i in dates_n_rates]))
             if len(dates_save) != 101:
                 continue
             self.all_dates.append(dates_save[:-1])
@@ -41,7 +41,7 @@ class PrepareData:
         self.sort_d(one_dict_dates_n_rates)
         self.add_missing_d(one_dict_dates_n_rates)
         self.check_boundary(start_date, end_date, one_dict_dates_n_rates)
-        one_dict_dates_n_rates = np.array([x[1] for x in one_dict_dates_n_rates])
+        one_dict_dates_n_rates = self.norm_data(np.array([x[1] for x in one_dict_dates_n_rates]))
         return one_dict_dates_n_rates
 
     @staticmethod
@@ -83,3 +83,7 @@ class PrepareData:
             return 1
         else:
             return 0
+
+    @staticmethod
+    def norm_data(data):
+        return (data - np.mean(data))/np.std(data)
