@@ -27,7 +27,7 @@ class RequestHandler:
 
     def get_data(self):
         logging.info("Downloading data from API..")
-        for i in range(10):
+        for i in range(1000):
             random_date = (random.randint(-1000, 1000))
             start_date = (self.DATETIME + datetime.timedelta(days=random_date))
             end_date = (start_date + datetime.timedelta(days=100))
