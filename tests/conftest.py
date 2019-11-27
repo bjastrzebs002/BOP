@@ -1,10 +1,25 @@
-# -*- coding: utf-8 -*-
-"""
-    Dummy conftest.py for bop.
+import unittest
 
-    If you don't know what this is for, just leave it empty.
-    Read more about conftest.py under:
-    https://pytest.org/latest/plugins.html
-"""
 
-# import pytest
+def run_tests():
+    testmodules = [
+        'TestBop',
+        'TestPrepareData',
+        'TestRequestHandler',
+        ]
+
+    suite = unittest.TestSuite()
+
+    for t in testmodules:
+        try:
+            mod = __import__(t, globals(), locals(), ['suite'])
+            suitefn = getattr(mod, 'suite')
+            suite.addTest(suitefn())
+        except (ImportError, AttributeError):
+            suite.addTest(unittest.defaultTestLoader.loadTestsFromName(t))
+
+    unittest.TextTestRunner().run(suite)
+
+
+if __name__ == "__main__":
+    run_tests()
