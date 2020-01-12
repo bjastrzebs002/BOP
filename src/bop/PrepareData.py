@@ -66,11 +66,12 @@ class PrepareData:
         end_date = datetime.strptime(end, '%Y-%m-%d').date()
         if dates_n_rates[0][0] != start_date:
             value = dates_n_rates[0][1]
-            actual_date = dates_n_rates[0][0]
+            actual_date = dates_n_rates[0][0] - timedelta(days=1)
             while actual_date != start_date:
                 dates_n_rates.insert(0, (actual_date, value))
                 actual_date -= timedelta(days=1)
-        elif dates_n_rates[-1][0] != end_date:
+            dates_n_rates.insert(0, (actual_date, value))
+        if dates_n_rates[-1][0] != end_date:
             value = dates_n_rates[-1][1]
             actual_date = dates_n_rates[-1][0]
             while actual_date != end_date:
