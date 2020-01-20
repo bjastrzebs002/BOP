@@ -11,7 +11,7 @@ class RequestHandler:
     def __init__(self, base, symbols):
         self.dates_list = []
         self.currency_list = ["USD", "EUR", "CAD", "CHF", "GBP", "SEK", "PLN"]
-        self.DATETIME = datetime.datetime.strptime("2015-01-01", '%Y-%m-%d')
+        self.DATETIME = datetime.datetime.strptime("2010-01-01", '%Y-%m-%d')
         self.datetime_now = datetime.datetime.now()
         self.base = base
         self.symbols = symbols
@@ -27,8 +27,13 @@ class RequestHandler:
 
     def get_data(self):
         logging.info("Downloading data from API..")
-        for i in range(1000):
-            random_date = (random.randint(-1000, 1000))
+        alr_dates = []
+        for i in range(3000):
+            random_date = (random.randint(-3000, 3000))
+            while random_date in alr_dates:
+                random_date = (random.randint(-3000, 3000))
+            alr_dates.append(random_date)
+
             start_date = (self.DATETIME + datetime.timedelta(days=random_date))
             end_date = (start_date + datetime.timedelta(days=100))
 

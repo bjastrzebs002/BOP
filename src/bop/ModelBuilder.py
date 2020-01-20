@@ -1,5 +1,6 @@
 from ModelData import ModelData
 from keras.models import Sequential
+from keras.constraints import unit_norm
 from keras.layers import LSTM, Dense, Dropout, TimeDistributed
 import logging
 
@@ -16,9 +17,7 @@ class ModelBuilder:
     def get_model():
         logging.info("Creating model..")
         model = Sequential()
-        model.add(LSTM(500, input_shape=(1, 100,), return_sequences=True))
-        model.add(LSTM(250, return_sequences=True))
-        model.add(LSTM(100, return_sequences=True))
+        model.add(LSTM(500, input_shape=(1, 100,), return_sequences=True, kernel_constraint=unit_norm()))
         model.add(Dropout(0.5))
         model.add(TimeDistributed(Dense(1, activation="sigmoid")))
 
